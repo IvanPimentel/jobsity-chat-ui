@@ -1,0 +1,18 @@
+#chat-room-message{
+  height: 100%;
+
+  .chat-room-message-content{
+    height: 100%;
+  }
+
+  .content{
+    height: 100%;
+
+    .content-messages{
+      height: 89%;
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      border-radius: 0.25rem;
+      padding: 20px;
+    }
+  }
+}
