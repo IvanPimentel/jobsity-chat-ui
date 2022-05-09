@@ -1,0 +1,23 @@
+<h6 class="card-subtitle mb-2 text-muted text-center">SIGN-UP</h6>
+<form #form="ngForm" ngNativeValidate (ngSubmit)="send()">
+  <div class="form-group">
+    <label for="Name">Name</label>
+    <input class="form-control" required minlength="3" maxlength="30" [(ngModel)]="model.name" name="model.name">
+  </div>
+  <div class="form-group">
+    <label for="Name">E-mail</label>
+    <input class="form-control" required type="email" [(ngModel)]="model.username" name="model.email">
+  </div>
+  <div class="form-group">
+    <label for="Name">Password</label>
+    <input class="form-control" required minlength="3" maxlength="12" [(ngModel)]="model.password" name="model.password">
+  </div>
+  <div class="form-group">
+    <label for="Name">Password Confirmation</label>
+    <input class="form-control" required minlength="3" maxlength="12" [(ngModel)]="model.passwordConfimation" name="model.passwordConfimation">
+  </div>
+  <div class="commands d-grid gap-2 mt-3">
+    <button class="btn btn-primary btn-block" type="submit">REGISTER</button>
+    <a class="btn btn-default btn-light" [routerLink]="['/']">BACK</a>
+  </div>
+</form>
