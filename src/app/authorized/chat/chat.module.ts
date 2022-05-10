@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatComponent } from './chat.component';
@@ -15,7 +16,8 @@ import { ChatRoomMessageService } from 'src/app/services/chat-room-message.servi
     ChatRoomMessageComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   providers:[
     ChatRoomService,

@@ -9,16 +9,16 @@
             <b>{{message.userId}}: </b>{{message.content}}
           </div>
         </div>
-        <div class="chat-command mt-3">
+        <form class="chat-command mt-3" (ngSubmit)="send()">
           <div class="row">
             <div class="col-11">
-              <input class="form-control" placeholder="Type your message...">
+              <input class="form-control" [(ngModel)]="newMessage.content" name="newMessage.content" placeholder="Type your message...">
             </div>
             <div class="col-1 d-grid gap-1">
-              <button class="btn btn-primary">SEND</button>
+              <button type="submit" class="btn btn-primary">SEND</button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
       <ng-template #withoutChatRoom>
         <div class="without-content">
