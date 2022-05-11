@@ -6,7 +6,7 @@
 
         <div class="content-messages">
           <div class="message" *ngFor="let message of chatMessages">
-            <b>{{message.userId}}: </b>{{message.content}}
+            <b>{{message.userId ? message.userId : 'CHAT BOT'}}: </b>{{message.content}}
           </div>
         </div>
         <form class="chat-command mt-3" (ngSubmit)="send()">

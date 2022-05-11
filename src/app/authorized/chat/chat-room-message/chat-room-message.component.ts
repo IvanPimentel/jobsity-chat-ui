@@ -27,19 +27,19 @@ export class ChatRoomMessageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getEvents();
-
+    this._signalRService.getEvents()
+          .pipe(takeUntil(this.unsub$))
+          .subscribe(e => this.chatMessages.push(e));
   }
 
   private getEvents() {
     this._chatRoomService.getEvents()
       .pipe(takeUntil(this.unsub$))
       .subscribe(r => {
+        this._signalRService.closeConection();
         this.chatRoom = r.data;
         this.getMessages(this.chatRoom.id);
-        this._signalRService.getEvents()
-          .pipe(takeUntil(this.unsub$))
-          .subscribe(e => this.chatMessages.push(e));
-        this._signalRService.startConnection();
+        this._signalRService.startConnection(this.chatRoom);
         this._signalRService.addDataListener();
       });
   }
@@ -60,6 +60,8 @@ export class ChatRoomMessageComponent implements OnInit, OnDestroy {
 
   send(){
     this.newMessage.chatRoomId = this.chatRoom.id;
+    // this._signalRService.send(this.newMessage);
+    // this.newMessage = new ChatRoomMessage();
     this._chatRoomMessageService.create(this.newMessage)
       .pipe(takeUntil(this.unsub$))
       .subscribe(r => {
