@@ -1,5 +1,13 @@
-<div class="list-group">
-  <button (click)="select(item)" type="button" class="list-group-item list-group-item-action" *ngFor="let item of data$ | async">
-    {{item.name}}
+
+
+<div class="row mb-2">
+  <div class="col  d-grid gap-1">
+    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#chatRoomModal"><i class="fa-solid fa-plus"></i> New Chat Room</button>
+  </div>
+</div>
+<div class="list-group" [ngClass]="{' list-rooms': data.length > 19}">
+  <button (click)="select(item)" type="button" class="list-group-item list-group-item-action" *ngFor="let item of data">
+    <i class="fa-solid fa-list me-3"></i> {{item.name}} <i class="fa-solid fa-arrow-right-to-bracket float-end mt-1"></i>
   </button>
 </div>
+<app-chat-room-form></app-chat-room-form>

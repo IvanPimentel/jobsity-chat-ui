@@ -1,13 +1,18 @@
 <div id="chat-room-message">
   <div class="card chat-room-message-content">
-    <div class="card-body">
+    <div class="card-body content">
       <div class="content" *ngIf="chatRoom; else withoutChatRoom">
-        <h5 class="card-title">{{chatRoom.name}}</h5>
+        <h5 class="card-title"><i class="fa-solid fa-comments"></i> {{chatRoom.name}}</h5>
 
-        <div class="content-messages">
-          <div class="message" *ngFor="let message of chatMessages">
-            <b>{{message.userId ? message.userId : 'CHAT BOT'}}: </b>{{message.content}}
+        <div class="content-messages" #chatScrool>
+          <div class="row" *ngFor="let message of chatMessages">
+            <div class="col" *ngIf="isCurrentUser(message)"></div>
+            <div class="message col-md-auto float-end">
+              <b><i class="fa-solid fa-robot" *ngIf="!message.userId"></i> {{message.userId ? message.name : 'CHAT BOT'}}: </b>{{message.content}}
+            </div>
+            <div class="col" *ngIf="!isCurrentUser(message)"></div>
           </div>
+
         </div>
         <form class="chat-command mt-3" (ngSubmit)="send()">
           <div class="row">
@@ -22,7 +27,7 @@
       </div>
       <ng-template #withoutChatRoom>
         <div class="without-content">
-          Select a chat room on left.
+          <i class="fa-solid fa-comments"></i> Select or create a chat room on left.
         </div>
       </ng-template>
 

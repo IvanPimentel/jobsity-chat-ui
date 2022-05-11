@@ -10,9 +10,24 @@
 
     .content-messages{
       height: 89%;
+      overflow-y: scroll;
       border: 1px solid rgba(0, 0, 0, 0.125);
       border-radius: 0.25rem;
       padding: 20px;
+
+      .message{
+        margin-top: 5px;
+        margin-bottom: 5px;
+        background-color: #f1f1f1;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
     }
   }
+}
+
+.without-content{
+  text-align: center;
+  margin-top: 40px;
+  font-size: 1.5rem;
 }

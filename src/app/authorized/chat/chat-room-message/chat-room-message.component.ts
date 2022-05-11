@@ -3,7 +3,7 @@ import { ChatRoomMessage } from './../../../models/chat-room-message';
 import { ChatRoom } from './../../../models/chat-room';
 import { pipe, Subject, takeUntil } from 'rxjs';
 import { ChatRoomService } from './../../../services/chat-room.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { ChatRoomMessageService } from 'src/app/services/chat-room-message.service';
 import { ChatRoomMessageSignalRService } from 'src/app/services/signalR/chat-room-message.signalR.service';
 
@@ -12,12 +12,14 @@ import { ChatRoomMessageSignalRService } from 'src/app/services/signalR/chat-roo
   templateUrl: './chat-room-message.component.html',
   styleUrls: ['./chat-room-message.component.scss']
 })
-export class ChatRoomMessageComponent implements OnInit, OnDestroy {
+export class ChatRoomMessageComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   unsub$ = new Subject();
   chatRoom!: ChatRoom;
   chatMessages: ChatRoomMessage[] = [];
   newMessage = new ChatRoomMessage();
+  @ViewChild('chatScrool') private chatScrollContainer!: ElementRef;
+  currentUserName!: string;
 
   constructor(private _chatRoomService: ChatRoomService,
               private _chatRoomMessageService: ChatRoomMessageService,
@@ -27,9 +29,14 @@ export class ChatRoomMessageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getEvents();
+    this.currentUserName = this._userService.user.username;
     this._signalRService.getEvents()
           .pipe(takeUntil(this.unsub$))
           .subscribe(e => this.chatMessages.push(e));
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
   }
 
   private getEvents() {
@@ -55,6 +62,8 @@ export class ChatRoomMessageComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsub$))
       .subscribe(r => {
         this.chatMessages = r.data;
+        console.log(r.data);
+        this.scrollToBottom();
       })
   }
 
@@ -73,6 +82,16 @@ export class ChatRoomMessageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsub$.next(null);
     this.unsub$.complete();
+  }
+
+  scrollToBottom(): void {
+    try {
+        this.chatScrollContainer.nativeElement.scrollTop = this.chatScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }
+  }
+
+  isCurrentUser(message: ChatRoomMessage){
+    return message.username && this.currentUserName == message.username;
   }
 
 }
