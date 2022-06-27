@@ -52,9 +52,7 @@ export class ChatRoomMessageComponent implements OnInit, OnDestroy, AfterViewChe
   }
 
   addMessage(data: ChatRoomMessage){
-    console.log(this.chatMessages);
     this.chatMessages.push(data);
-    console.log(this.chatMessages);
   }
 
   getMessages(chatRoomId: string){
@@ -62,7 +60,6 @@ export class ChatRoomMessageComponent implements OnInit, OnDestroy, AfterViewChe
       .pipe(takeUntil(this.unsub$))
       .subscribe(r => {
         this.chatMessages = r.data;
-        console.log(r.data);
         this.scrollToBottom();
       })
   }
@@ -74,7 +71,6 @@ export class ChatRoomMessageComponent implements OnInit, OnDestroy, AfterViewChe
     this._chatRoomMessageService.create(this.newMessage)
       .pipe(takeUntil(this.unsub$))
       .subscribe(r => {
-        console.log(r);
         this.newMessage = new ChatRoomMessage();
       });
   }

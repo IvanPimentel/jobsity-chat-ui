@@ -16,21 +16,18 @@ export class ChatRoomSignalRService {
                               .build();
       this.hubConnection
         .start()
-        .then(() => {
-          console.log('Connection started');
-        })
+        .then()
         .catch(err => console.log('Error while starting connection: ' + err))
     }
 
     closeConection(){
       if(this.hubConnection)
         this.hubConnection.stop()
-          .then(r => console.log(r));
+          .then();
     }
 
     public addDataListener(){
       this.hubConnection.on('NewChatRoom', (data) => {
-        console.log(data);
         this.newChatRoomEmitter.emit(data);
       });
     }

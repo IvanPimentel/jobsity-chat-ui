@@ -18,7 +18,6 @@ export class ChatRoomMessageSignalRService {
       this.hubConnection
         .start()
         .then(() => {
-          console.log('Connection started');
           this.join(chatRoom);
         })
         .catch(err => console.log('Error while starting connection: ' + err))
@@ -26,23 +25,22 @@ export class ChatRoomMessageSignalRService {
 
     join(chatRoom: ChatRoom){
       this.hubConnection.invoke('Join', chatRoom.id)
-        .then(r => console.log(r));
+        .then();
     }
 
     closeConection(){
       if(this.hubConnection)
         this.hubConnection.stop()
-          .then(r => console.log(r));
+          .then();
     }
 
     leave(chatRoom: ChatRoom){
       this.hubConnection.invoke('Leave', chatRoom.id)
-        .then(r => console.log(r));
+        .then();
     }
 
     public addDataListener(){
       this.hubConnection.on('NewChatMessage', (data) => {
-        console.log(data);
         this.newMessageEmitter.emit(data);
       });
     }
